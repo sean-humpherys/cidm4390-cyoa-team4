@@ -1,6 +1,8 @@
+/* Testing:
 Die die = new Die();
 int result = die.Roll();
 Console.WriteLine($"Number is: {result}");
+*/
 
 public class Die
 {
@@ -9,7 +11,7 @@ public class Die
 
     public int Roll()
     {
-        int number = random.Next(1, MaxValue);
+        int number = random.Next(1, MaxValue + 1);
         return number;
     }
 }
