@@ -1,17 +1,27 @@
-/* Testing:
-Die die = new Die();
-int result = die.Roll();
-Console.WriteLine($"Number is: {result}");
-*/
 
 public class Die
 {
     private readonly Random random = new Random();
-    public const int MaxValue = 20;
+    private readonly int _sides;
+
+    public Die(int sides)
+    {
+        if (sides < 1)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(sides), sides, "A die must have at least 1 side.");
+        }
+
+        _sides = sides;
+    }
+
+    public int Sides
+    {
+        get { return _sides; }
+    }
 
     public int Roll()
     {
-        int number = random.Next(1, MaxValue + 1);
-        return number;
+        return random.Next(1, _sides + 1);
     }
 }
