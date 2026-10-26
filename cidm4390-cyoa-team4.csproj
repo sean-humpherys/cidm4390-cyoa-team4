@@ -8,7 +8,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="PlayerTests/**/*.cs" />
+    <Compile Remove="MessageTests/**/*.cs" />
 </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Languages/**/*.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="GameTests\**" />
