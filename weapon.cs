@@ -1,6 +1,5 @@
 namespace cidm4390_cyoa_team4;
 
-
 public class Weapon
 {
     //Weapon information
@@ -15,10 +14,5 @@ public class Weapon
         AsciiArt = asciiArt;
     }
 
-    public string DisplayWeapon() {
-
-       return $"Weapon: {Type}\n" +
-       $"Max Damage: {MaxDamage}";
-    }   
 }
 

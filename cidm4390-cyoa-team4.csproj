@@ -15,9 +15,8 @@
     <Content Include="Languages/**/*.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="GameTests\**" />
-    <None Remove="GameTests\**" />
-  </ItemGroup>
+ <ItemGroup>
+  <Compile Remove="Weapon.Tests/**" />
+</ItemGroup>
 
 </Project>
