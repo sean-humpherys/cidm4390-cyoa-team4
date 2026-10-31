@@ -36,7 +36,7 @@ public class MessagesTests
     {
         var messages = new Messages();
 
-        messages.ReadDictionary(GetLanguageFile("spanish.txt"));
+        messages.ReadDictionary(GetLanguageFile("Spanish.txt"));
 
         Assert.AreEqual("dos", messages.GetMessage(2));
     }
