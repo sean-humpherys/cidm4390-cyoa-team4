@@ -13,7 +13,7 @@ public class Messages
 		string languageFilePath = Path.Combine(
 			AppContext.BaseDirectory,
 			"Languages",
-			$"{language.ToString().ToLowerInvariant()}.txt");
+			$"{language}.txt");
 		ReadDictionary(languageFilePath);
 	}
 
