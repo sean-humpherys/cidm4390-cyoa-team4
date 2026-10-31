@@ -1,3 +1,4 @@
+using cidm4390_cyoa_team4;
 public class Player
 {
     // Basic player information
@@ -9,6 +10,7 @@ public class Player
     public int Strength { get; set; }
     public int Agility { get; set; }
     public int Health { get; set; }
+    public Weapon? Weapon { get; set; }
 
     // Default constructor
     public Player()

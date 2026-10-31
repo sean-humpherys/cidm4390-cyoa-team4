@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using cidm4390_cyoa_team4;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [TestClass]
 public class PlayerUnitTests
@@ -52,4 +53,17 @@ public class PlayerUnitTests
         Assert.Contains("Agility: 8", stats);
         Assert.Contains("Health: 20", stats);
     }
+    [TestMethod]
+    public void WeaponPropertyStoresAssignedWeapon()
+        {
+        // Create a player and a weapon
+        Player player = new Player();
+        Weapon weapon = new Weapon("Long sword", 12, "-)=====>");
+
+        // Give the player the weapon
+        player.Weapon = weapon;
+
+        // Verify the weapon was assigned correctly
+        Assert.AreSame(weapon, player.Weapon);
+}
 }
