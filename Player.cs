@@ -1,3 +1,6 @@
+
+using cidm4390_cyoa_team4;
+
 public class Player
 {
     // Basic player information
@@ -9,6 +12,9 @@ public class Player
     public int Strength { get; set; }
     public int Agility { get; set; }
     public int Health { get; set; }
+
+    // Player weapon
+    public Weapon? Weapon { get; set; }
 
     // Default constructor
     public Player()
@@ -23,14 +29,28 @@ public class Player
         Occupation = occupation;
     }
 
+    // Player taunt when an attack misses
+    public string MissedMeTaunt()
+    {
+        return "You missed me!";
+    }
+
+    // Player taunt when hit by an attack
+    public string WasHitTaunt()
+    {
+        return "Ouch! That hurt!";
+    }
+
     // Return the player's information and statistics
     public string DisplayStats()
     {
         return $"Name: {Name}\n" +
-           $"Race: {Race}\n" +
-           $"Occupation: {Occupation}\n" +
-           $"Strength: {Strength}\n" +
-           $"Agility: {Agility}\n" +
-           $"Health: {Health}";
-}
+               $"Race: {Race}\n" +
+               $"Occupation: {Occupation}\n" +
+               $"Strength: {Strength}\n" +
+               $"Agility: {Agility}\n" +
+               $"Health: {Health}\n" +
+               $"Weapon: {Weapon?.Type ?? "None"}\n" +
+               $"Weapon Max Damage: {Weapon?.MaxDamage ?? 0}";
+    }
 }
