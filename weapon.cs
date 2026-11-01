@@ -14,7 +14,7 @@ public class Weapon
         MaxDamage = maxDamage;
         AsciiArt = asciiArt;
         //Hello
-
+        //Added to update the Weapon.cs in PascalCase
     }
 
 }
