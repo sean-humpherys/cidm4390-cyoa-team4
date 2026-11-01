@@ -13,6 +13,8 @@ public class Weapon
         Type = type;
         MaxDamage = maxDamage;
         AsciiArt = asciiArt;
+        //Hello
+
     }
 
 }

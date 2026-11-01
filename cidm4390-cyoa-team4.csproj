@@ -20,5 +20,10 @@
   <Compile Remove="Weapon.Tests/**" />
   <Compile Remove="DragonTests/**/*.cs" />
 </ItemGroup>
+<ItemGroup>
+  <Compile Remove="Combat.Tests\**" />
+  <None Remove="Combat.Tests\**" />
+  <EmbeddedResource Remove="Combat.Tests\**" />
+</ItemGroup>
 
 </Project>

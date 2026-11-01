@@ -25,26 +25,26 @@ public class Combat
             if (dragonDefendRoll <= Dragon.Agility)
             {
                 Console.WriteLine($"{Dragon.Name} successfully defends your attack");
-                Console.WriteLine(Dragon.MissedMeTaunt);
+                Console.WriteLine(Dragon.MissedMeTaunt());
             }
             else
             {
-                int dragonDamage = die.Roll(Player.Weapon.MaxDamage);
+                int dragonDamage = die.Roll(Player.Weapon!.MaxDamage);
                 Dragon.Health -= dragonDamage;
                 
-                Console.WriteLine($"The dragon failed to defend your attack. Your weapon delivers {dragonDamage} damage points. The Dragons health point is now {Dragon,Health}");
+                Console.WriteLine($"The dragon failed to defend your attack. Your weapon delivers {dragonDamage} damage points. The Dragons health point is now {Dragon.Health}");
 
                 if (Dragon.Health <= 0)
                 {
                     Console.WriteLine($"With the last words of 'Arggg!', you have defeated the dragon.");
-                    Game.EndGame();
+                    //Uncomment when Game.cs is added
+                    //Game.EndGame();
                 }
                 else
                 {
-                    Console.WriteLine(Dragon.WasHitTaunt);
+                    Console.WriteLine(Dragon.WasHitTaunt());
                 }
             }
-
         }
         else
         {
@@ -65,11 +65,11 @@ public class Combat
             if (playerDefendRoll <= Player.Agility)
             {
                 Console.WriteLine("You successfully defend the attack");
-                Console.WriteLine(Player.MissedMeTaunt);
+                Console.WriteLine(Player.MissedMeTaunt());
             }
             else
             {
-                int playerDamage = die.Roll(Dragon.Weapon.MaxDamage);
+                int playerDamage = die.Roll(Dragon.Weapon!.MaxDamage);
                 Player.Health -= playerDamage;
                 
                 Console.WriteLine($"The dragon attack delivers {playerDamage} damage points. Your health point is now {Player.Health}");
@@ -77,11 +77,12 @@ public class Combat
                 if (Player.Health <= 0)
                 {
                     Console.WriteLine($"With the last words of 'Oh No!', you have been defeated.");
-                    Game.EndGame();
+                    //Uncomment when Game.cs is added
+                    //Game.EndGame();
                 }
                 else
                 {
-                    Console.WriteLine(Player.WasHitTaunt);
+                    Console.WriteLine(Player.WasHitTaunt());
                 }
             }
 
