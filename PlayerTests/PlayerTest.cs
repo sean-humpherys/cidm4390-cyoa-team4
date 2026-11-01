@@ -1,5 +1,6 @@
-﻿using cidm4390_cyoa_team4;
+﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using cidm4390_cyoa_team4;
 
 [TestClass]
 public class PlayerUnitTests
@@ -18,6 +19,7 @@ public class PlayerUnitTests
         Assert.AreEqual(0, player.Strength);
         Assert.AreEqual(0, player.Agility);
         Assert.AreEqual(0, player.Health);
+        Assert.IsNull(player.Weapon);
     }
 
     [TestMethod]
@@ -52,10 +54,12 @@ public class PlayerUnitTests
         Assert.Contains("Strength: 10", stats);
         Assert.Contains("Agility: 8", stats);
         Assert.Contains("Health: 20", stats);
+        Assert.Contains("Weapon: None", stats);
     }
+
     [TestMethod]
     public void WeaponPropertyStoresAssignedWeapon()
-        {
+    {
         // Create a player and a weapon
         Player player = new Player();
         Weapon weapon = new Weapon("Long sword", 12, "-)=====>");
@@ -65,5 +69,40 @@ public class PlayerUnitTests
 
         // Verify the weapon was assigned correctly
         Assert.AreSame(weapon, player.Weapon);
-}
+    }
+
+    [TestMethod]
+    public void DisplayStatsIncludesWeaponInformation()
+    {
+        // Create a player with a weapon
+        Player player = new Player("Arthur", "Human", "Fighter");
+        player.Weapon = new Weapon("Long sword", 12, "-)=====>");
+
+        // Get the player's statistics
+        string stats = player.DisplayStats();
+
+        // Verify the weapon information is displayed
+        Assert.Contains("Weapon: Long sword", stats);
+        Assert.Contains("Weapon Max Damage: 12", stats);
+    }
+
+    [TestMethod]
+    public void MissedMeTauntReturnsMessage()
+    {
+        // Create a player
+        Player player = new Player();
+
+        // Verify the taunt
+        Assert.AreEqual("You missed me!", player.MissedMeTaunt());
+    }
+
+    [TestMethod]
+    public void WasHitTauntReturnsMessage()
+    {
+        // Create a player
+        Player player = new Player();
+
+        // Verify the taunt
+        Assert.AreEqual("Ouch! That hurt!", player.WasHitTaunt());
+    }
 }
