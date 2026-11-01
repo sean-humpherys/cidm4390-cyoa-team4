@@ -7,11 +7,14 @@ public class Weapon
     public int MaxDamage {get; set;}
     public string AsciiArt {get; set;}
 
+    //Weapons
     public Weapon (string type, int maxDamage, string asciiArt){
 
         Type = type;
         MaxDamage = maxDamage;
         AsciiArt = asciiArt;
+        //Hello
+
     }
 
 }
