@@ -18,6 +18,7 @@
 
  <ItemGroup>
   <Compile Remove="Weapon.Tests/**" />
+  <Compile Remove="DragonTests/**/*.cs" />
 </ItemGroup>
 
 </Project>
