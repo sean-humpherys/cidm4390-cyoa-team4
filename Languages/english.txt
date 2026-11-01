@@ -1,3 +1,75 @@
-one
-two
-three
+Start Game Activity Diagram
+Welcome to Choose Your Adventure Game
+You are walking in the mountains...Enter 'n' for North. Enter 's' for South. Enter 'e' for exit game
+You take the North path...The dragon has a hoard of gold behind it.
+You take the South path... still bored.
+
+The dragon says 'I am 
+. Leave or perish!
+
+Your magic ring gives you the stats on the dragon.
+Do you wish to retreat or attack? Enter 'r' for retreat. Enter 'a' for attack.
+
+Create Character Activity Diagram
+What race of character do you want to be? Human, Elf, Dwarf or Halfling?
+What is the name of your character?
+What is the occupation of your character? Fighter, magician, thief, or archer?
+Next, we are going to roll for strength. Type 'roll'
+Next, we will roll for agility. Type 'roll'
+Next, we will roll for health points. Type 'roll'
+What would you like to do next? 1. List character stats. 2. Proceed on an adventure. Type 1 or 2
+Display character summary:
+Name:
+Race:
+Occupation:
+Strength value:
+Agility value:
+Health Points:
+Weapon:
+Weapon's maximum damage points:
+
+Attack Diagram
+You prepare yourself to attack the dragon with your weapon. As a 
+you withdraw your 
+You attack.
+You missed
+
+You hit 
+ successfully defends your attack.
+
+Missed me, breath of a gnat!
+Is that all you've got? I've seen kittens with more fire in their paws!
+
+Try harder, 
+! You're making me yawn!
+
+Maybe if you squinted harder, you'd actually hit something!
+
+The dragon failed to defend your attack. Your weapon delivers 
+ damage points. The dragon's health points is now
+ 
+With the last words of 'Argggh!', you have defeated the dragon.
+
+Ow! That actually stung a bit!
+Impressive! You might actually be worth toasting...
+That... was unexpected. But I assure you, it won't happen again.
+Well, I'll be! You have more bite than I thought!
+
+The dragon missed you.
+ hits you.
+You successfully defend the attack.
+
+The dragon's attack delivers 
+ damage points. Your health points is now 
+
+With the last words of 'Oh no!', you have been defeated by the dragon.
+
+It's just a flesh wound.
+You will rue the day you met me...
+Ha, I'm still breathing!
+I never give up! I never surrender!
+
+End Game Diagram
+You quickly retreat... The End.
+With the dragon vanquished... The End.
+The dragon laughs as your eyesight fades... The End.
