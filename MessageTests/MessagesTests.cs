@@ -4,9 +4,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class MessagesTests
 {
     [TestMethod]
-    [DataRow(Languages.English, "one", "three")]
-    [DataRow(Languages.French, "un", "trois")]
-    [DataRow(Languages.Spanish, "uno", "tres")]
+    [DataRow(Languages.English, "Start Game Activity Diagram", "You are walking in the mountains...Enter 'n' for North. Enter 's' for South. Enter 'e' for exit game")]
+    [DataRow(Languages.French, "Start Game Activity Diagram", "Vous marchez dans les montagnes... Entrez 'n' pour le Nord. Entrez 's' pour le Sud. Entrez 'e' pour quitter le jeu")]
+    [DataRow(Languages.Spanish, "Start Game Activity Diagram", "Caminas por las montañas... Introduce 'n' para ir al Norte. Introduce 's' para ir al Sur. Introduce 'e' para salir del juego")]
     public void ReadDictionary_LoadsBundledLanguageFiles(Languages language, string firstMessage, string thirdMessage)
     {
         var messages = new Messages();
@@ -23,12 +23,12 @@ public class MessagesTests
         var messages = new Messages();
         messages.ReadDictionary(Languages.English);
 
-        Assert.AreEqual("one", messages.GetMessage(1));
+        Assert.AreEqual("Start Game Activity Diagram", messages.GetMessage(1));
 
         messages.ReadDictionary(Languages.French);
 
-        Assert.AreEqual("un", messages.GetMessage(1));
-        Assert.AreEqual("deux", messages.GetMessage(2));
+        Assert.AreEqual("Start Game Activity Diagram", messages.GetMessage(1));
+        Assert.AreEqual("Bienvenue dans le jeu « Choisis ton aventure »", messages.GetMessage(2));
     }
 
     [TestMethod]
@@ -38,7 +38,7 @@ public class MessagesTests
 
         messages.ReadDictionary(GetLanguageFile("Spanish.txt"));
 
-        Assert.AreEqual("dos", messages.GetMessage(2));
+        Assert.AreEqual("Bienvenido al juego «Elige tu propia aventura»", messages.GetMessage(2));
     }
 
     [TestMethod]
