@@ -1,6 +1,4 @@
-﻿// Game:
-
-
+﻿﻿// Game:
 Game game = new Game();
 
 while (game.IsRunning)

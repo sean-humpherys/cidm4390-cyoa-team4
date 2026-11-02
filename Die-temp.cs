@@ -13,4 +13,5 @@ public class Die
 
         return random.Next(1, sides + 1);
     }
+    // for Die
 }
