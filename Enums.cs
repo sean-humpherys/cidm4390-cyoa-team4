@@ -19,5 +19,7 @@ public enum Languages
     English,
     Spanish,
     French
+
+    // for Enums
     
 }
