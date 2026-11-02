@@ -9,6 +9,7 @@ public class Die
             throw new ArgumentOutOfRangeException(
                 nameof(sides), sides, "A die must have at least 1 side.");
         }
+        
 
         return random.Next(1, sides + 1);
     }
