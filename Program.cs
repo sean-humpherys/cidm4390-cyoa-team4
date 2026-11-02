@@ -20,7 +20,7 @@ while (game.IsRunning)
             break;
         }
 
-        game.Combat.PlayerAttacksDragonSequence();
+        game.Combat.PlayAttacksDragonSequence(); // Fix typo in Combat.cs and change backe to Player
         if (game.Dragon.Health <= 0)
         {
             game.EndGame();

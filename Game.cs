@@ -1,3 +1,5 @@
+using cidm4390_cyoa_team4;
+
 public class Game
 {
     private const string DragonName = "Smaug";
@@ -7,6 +9,7 @@ public class Game
     public Messages Messages { get; private set; }
     public Player Player { get; private set; }
     public Combat Combat { get; private set; }
+    public Weapon Weapon {get; private set;}
 
     // True until the player chooses to end the game from the menu
     public bool IsRunning { get; private set; } = true;
@@ -78,7 +81,37 @@ public class Game
         }
 
         // new Player(name, race, occupation)
-        Player = new Player(name, race.ToString(), occupation.ToString());
+        const int StatPoints = 30;
+        int strength, agility;
+
+        while (true)
+        {
+            Console.WriteLine($"You have {StatPoints} points to split between Strength and Agility.");
+
+            Console.WriteLine("Enter Strength (1-20):");
+            while (!int.TryParse(Console.ReadLine()?.Trim(), out strength) || strength < 1 || strength > 20)
+            {
+                Console.WriteLine("Please enter a whole number from 1 to 20.");
+            }
+
+            Console.WriteLine("Enter Agility (1-20):");
+            while (!int.TryParse(Console.ReadLine()?.Trim(), out agility) || agility < 1 || agility > 20)
+            {
+                Console.WriteLine("Please enter a whole number from 1 to 20.");
+            }
+
+            if (strength + agility <= StatPoints) break;
+
+            Console.WriteLine($"That totals {strength + agility}. It must be {StatPoints} or less. Try again.");
+        }
+
+        Player = new Player(name, race.ToString(), occupation.ToString())
+        {
+            Strength = strength,
+            Agility = agility,
+            Health = 50,
+            Weapon = new Weapon("Sword", 10, "")
+        };
 
         // new Combat(player, dragon)
         Combat = new Combat(Player, Dragon);
