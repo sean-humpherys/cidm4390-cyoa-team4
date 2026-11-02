@@ -9,15 +9,21 @@
   <ItemGroup>
     <Compile Remove="PlayerTests/**/*.cs" />
     <Compile Remove="MessageTests/**/*.cs" />
+    <Compile Remove="GameTests/**/*.cs" />
 </ItemGroup>
 
   <ItemGroup>
     <Content Include="Languages/**/*.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="GameTests\**" />
-    <None Remove="GameTests\**" />
-  </ItemGroup>
+ <ItemGroup>
+  <Compile Remove="Weapon.Tests/**" />
+  <Compile Remove="DragonTests/**/*.cs" />
+</ItemGroup>
+<ItemGroup>
+  <Compile Remove="Combat.Tests\**" />
+  <None Remove="Combat.Tests\**" />
+  <EmbeddedResource Remove="Combat.Tests\**" />
+</ItemGroup>
 
 </Project>
