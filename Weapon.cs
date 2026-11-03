@@ -1,4 +1,3 @@
-namespace cidm4390_cyoa_team4;
 
 public class Weapon
 {
