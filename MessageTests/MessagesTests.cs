@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class MessagesTests
 {
     [TestMethod]
-    [DataRow(Languages.English, "Start Game Activity Diagram", "You are walking in the mountains...Enter 'n' for North. Enter 's' for South. Enter 'e' for exit game")]
-    [DataRow(Languages.French, "Start Game Activity Diagram", "Vous marchez dans les montagnes... Entrez 'n' pour le Nord. Entrez 's' pour le Sud. Entrez 'e' pour quitter le jeu")]
-    [DataRow(Languages.Spanish, "Start Game Activity Diagram", "Caminas por las montañas... Introduce 'n' para ir al Norte. Introduce 's' para ir al Sur. Introduce 'e' para salir del juego")]
-    public void ReadDictionary_LoadsBundledLanguageFiles(Languages language, string firstMessage, string thirdMessage)
+    [DataRow(Languages.English, "Start Game Activity Diagram", "You are walking in the mountains...Enter 'n' for North. Enter 's' for South. Enter 'e' for exit game", "The dragon says 'I am ", "The dragon laughs as your eyesight fades... The End.")]
+    [DataRow(Languages.French, "Start Game Activity Diagram", "Vous marchez dans les montagnes... Entrez 'n' pour le Nord. Entrez 's' pour le Sud. Entrez 'e' pour quitter le jeu", "Le dragon dit : « Je suis ", "Le dragon rit tandis que votre vue s'éteint... Fin.")]
+    [DataRow(Languages.Spanish, "Start Game Activity Diagram", "Caminas por las montañas... Introduce 'n' para ir al Norte. Introduce 's' para ir al Sur. Introduce 'e' para salir del juego", "El dragón dice: «Soy ", "El dragón se ríe mientras tu vista se apaga... Fin.")]
+    public void ReadDictionary_LoadsBundledLanguageFiles(Languages language, string firstMessage, string thirdMessage, string messageAfterGap, string finalMessage)
     {
         var messages = new Messages();
 
@@ -15,6 +15,9 @@ public class MessagesTests
 
         Assert.AreEqual(firstMessage, messages.GetMessage(1));
         Assert.AreEqual(thirdMessage, messages.GetMessage(3));
+        Assert.AreEqual(messageAfterGap, messages.GetMessage(6));
+        Assert.AreEqual(finalMessage, messages.GetMessage(59));
+        AssertMissingMessage(messages, 60);
     }
 
     [TestMethod]
@@ -36,7 +39,7 @@ public class MessagesTests
     {
         var messages = new Messages();
 
-        messages.ReadDictionary(GetLanguageFile("Spanish.txt"));
+        messages.ReadDictionary(GetLanguageFile("Spanish.json"));
 
         Assert.AreEqual("Bienvenido al juego «Elige tu propia aventura»", messages.GetMessage(2));
     }

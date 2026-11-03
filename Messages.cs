@@ -13,7 +13,7 @@ public class Messages
 		string languageFilePath = Path.Combine(
 			AppContext.BaseDirectory,
 			"Languages",
-			$"{language}.txt");
+			$"{language}.json");
 		ReadDictionary(languageFilePath);
 	}
 
@@ -25,10 +25,8 @@ public class Messages
 			throw new ArgumentException("The language file name must match a Languages enum value.", nameof(languageFilePath));
 		}
 
-		string[] messages = File.ReadAllLines(languageFilePath);
-		languageDictionary = messages
-			.Select((message, index) => new { Message = message, Number = index + 1 })
-			.ToDictionary(entry => entry.Number, entry => entry.Message);
+		languageDictionary = System.Text.Json.JsonSerializer.Deserialize<Dictionary<int, string>>(File.ReadAllText(languageFilePath))
+			?? throw new InvalidDataException("The language file must contain a JSON object of numbered messages.");
 		currentLanguage = language;
 	}
 

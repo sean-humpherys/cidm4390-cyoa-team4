@@ -9,7 +9,7 @@ while (game.IsRunning)
     while (game.IsGameActive)
     {
         // Attack or end the current game
-        Console.WriteLine(game.Messages.GetMessage(6));
+        Console.WriteLine();
         string choice = (Console.ReadLine() ?? "").Trim();
 
         if (choice.Equals("Q", StringComparison.OrdinalIgnoreCase))
