@@ -35,16 +35,16 @@ public class Game
             }
             Messages.ReadDictionary(language);
 
-            // getMessage(1) first message
-            Console.WriteLine(Messages.GetMessage(1));
         }
 
         // getMessage(2) menu message: 1 = start a new game, 2 = end the game
         Console.WriteLine(Messages.GetMessage(2));
+
+        Console.WriteLine("Please enter '1' to continue or '2' to exit the game");
         string menuChoice = (Console.ReadLine() ?? "").Trim();
+
         while (menuChoice != "1" && menuChoice != "2")
         {
-            Console.WriteLine("Please enter 1 or 2.");
             menuChoice = (Console.ReadLine() ?? "").Trim();
         }
 
