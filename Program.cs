@@ -1,26 +1,42 @@
-﻿﻿// Game:
-Game game = new Game();
+﻿﻿Game game = new Game();
 
 while (game.IsRunning)
 {
-    // Shows the menu; sets up a new game, or ends the program if the player chooses to end
     game.StartGame();
+
+    bool firstRound = true;   // the attack intro prints only once
 
     while (game.IsGameActive)
     {
-        // Attack or end the current game
+        // Retreat or attack (message 9)
         Console.WriteLine();
-        string choice = (Console.ReadLine() ?? "").Trim();
+        Console.WriteLine(game.Messages.GetMessage(9));
+        string fightChoice = (Console.ReadLine() ?? "").Trim().ToLower();
 
-        if (choice.Equals("Q", StringComparison.OrdinalIgnoreCase))
+        while (fightChoice != "r" && fightChoice != "a")
         {
-            game.EndGame();   // back to the menu
+            fightChoice = (Console.ReadLine() ?? "").Trim().ToLower();
+        }
+
+        if (fightChoice == "r")
+        {
+            Console.WriteLine(game.Messages.GetMessage(57));   // You quickly retreat... The End.
+            game.EndGame();
             break;
         }
 
-        game.Combat.PlayAttacksDragonSequence(); // Fix typo in Combat.cs and change backe to Player
+        // First attack only: messages 28 + 29 + 30 on one line, then the occupation message
+        if (firstRound)
+        {
+            Console.WriteLine($"{game.Messages.GetMessage(28)}{game.Player.Occupation}, {game.Messages.GetMessage(29)}{game.Player.Weapon.Type}. {game.Messages.GetMessage(30)}");
+            Console.WriteLine(game.Player.Weapon.AsciiArt);   // messages 61/63/65/67, set when the weapon was created
+            firstRound = false;
+        }
+
+        game.Combat.PlayAttacksDragonSequence();
         if (game.Dragon.Health <= 0)
         {
+            Console.WriteLine(game.Messages.GetMessage(58));   // With the dragon vanquished... The End.
             game.EndGame();
             break;
         }
@@ -28,7 +44,9 @@ while (game.IsRunning)
         game.Combat.DragonAttacksPlayerSequence();
         if (game.Player.Health <= 0)
         {
+            Console.WriteLine(game.Messages.GetMessage(59));   // The dragon laughs as your eyesight fades... The End.
             game.EndGame();
+            break;
         }
     }
 }
