@@ -63,10 +63,10 @@ public class Game
             // Weapon is determined by the chosen occupation
             Weapon weapon = occupation switch
             {
-                Occupation.Fighter  => new Weapon("Long Sword", 12, ""),
-                Occupation.Magician => new Weapon("Lightning Bolt Spell", 12, ""),
-                Occupation.Thief    => new Weapon("Dagger", 6, ""),
-                Occupation.Archer   => new Weapon("Long Bow", 8, ""),
+                Occupation.Fighter  => new Weapon(Messages.GetMessage(60), 12, Messages.GetMessage(61)),
+                Occupation.Magician => new Weapon(Messages.GetMessage(62), 12, Messages.GetMessage(63)),
+                Occupation.Thief    => new Weapon(Messages.GetMessage(64), 6, Messages.GetMessage(65)),
+                Occupation.Archer   => new Weapon(Messages.GetMessage(66), 8, Messages.GetMessage(67)),
                 _                   => new Weapon("Sword", 10, "")   // fallback, shouldn't happen
             };
 
@@ -176,7 +176,6 @@ public class Game
             Console.WriteLine($"{Messages.GetMessage(24)} {Player.Health}");
             Console.WriteLine($"{Messages.GetMessage(25)} {Player.Weapon.Type}");
             Console.WriteLine($"{Messages.GetMessage(26)} {Player.Weapon.MaxDamage}");
-            Console.WriteLine();
         }
 
         // '2' falls through with no stats shown
