@@ -57,14 +57,16 @@ public class Game
 
         // new Dragon(name)
         Dragon = new Dragon(DragonName);
+        //Dragon.Health = 100;
+        //Dragon.Strength = 10;
 
         // getMessage(3) ask player's name
-        Console.WriteLine(Messages.GetMessage(3));
+        Console.WriteLine(Messages.GetMessage(12));
         string name = Console.ReadLine() ?? "";
 
         // getMessage(4) ask race
         Race race;
-        Console.WriteLine(Messages.GetMessage(4));
+        Console.WriteLine(Messages.GetMessage(11));
         Console.WriteLine(string.Join(", ", Enum.GetNames(typeof(Race))));
         while (!Enum.TryParse(Console.ReadLine()?.Trim(), true, out race) || !Enum.IsDefined(race))
         {
@@ -73,7 +75,7 @@ public class Game
 
         // getMessage(5) ask occupation
         Occupation occupation;
-        Console.WriteLine(Messages.GetMessage(5));
+        Console.WriteLine(Messages.GetMessage(13));
         Console.WriteLine(string.Join(", ", Enum.GetNames(typeof(Occupation))));
         while (!Enum.TryParse(Console.ReadLine()?.Trim(), true, out occupation) || !Enum.IsDefined(occupation))
         {
@@ -113,11 +115,80 @@ public class Game
             Weapon = new Weapon("Sword", 10, "")
         };
 
+        // new Dragon(name)
+        Dragon = new Dragon(DragonName)
+        {
+            Health = 100,
+            Strength = 10,
+            Weapon = new Weapon("Fire Breath", 12, "")
+        };
+
         // new Combat(player, dragon)
         Combat = new Combat(Player, Dragon);
 
+        // Display the character summary
+        Console.WriteLine();
+        Console.WriteLine(Messages.GetMessage(18));
+        Console.WriteLine($"{Messages.GetMessage(19)} {Player.Name}");
+        Console.WriteLine($"{Messages.GetMessage(20)} {Player.Race}");
+        Console.WriteLine($"{Messages.GetMessage(21)} {Player.Occupation}");
+        Console.WriteLine($"{Messages.GetMessage(22)} {Player.Strength}");
+        Console.WriteLine($"{Messages.GetMessage(23)} {Player.Agility}");
+        Console.WriteLine($"{Messages.GetMessage(24)} {Player.Health}");
+        Console.WriteLine($"{Messages.GetMessage(25)} {Player.Weapon.Type}");
+        Console.WriteLine($"{Messages.GetMessage(26)} {Player.Weapon.MaxDamage}");
+        Console.WriteLine();
+
+        // Path choice: message 3 prompts, 'n' = message 4, 's' = message 5, 'e' = exit
+        Console.WriteLine(Messages.GetMessage(3));
+        string pathChoice = (Console.ReadLine() ?? "").Trim().ToLower();
+
+        while (pathChoice != "n" && pathChoice != "s" && pathChoice != "e")
+        {
+            pathChoice = (Console.ReadLine() ?? "").Trim().ToLower();
+        }
+
+        if (pathChoice == "e")
+        {
+            EndGame();
+            return;   // stop here so IsGameActive isn't set back to true
+        }
+
+        Console.WriteLine(Messages.GetMessage(pathChoice == "n" ? 4 : 5));
+
+        // Dragon speaks in red: message 6 + dragon's name + message 7 on one line
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"{Messages.GetMessage(6)}{DragonName}{Messages.GetMessage(7)}");
+        Console.ResetColor();
+
+        // Magic ring shows the dragon's stats
+        Console.WriteLine(Messages.GetMessage(8));
+        Console.WriteLine($"Name: {Dragon.Name}");
+        Console.WriteLine($"Health: {Dragon.Health}");
+
+        // Retreat or attack
+        Console.WriteLine(Messages.GetMessage(9));
+        string fightChoice = (Console.ReadLine() ?? "").Trim().ToLower();
+
+        while (fightChoice != "r" && fightChoice != "a")
+        {
+            fightChoice = (Console.ReadLine() ?? "").Trim().ToLower();
+        }
+
+        if (fightChoice == "r")
+        {
+            EndGame();
+            return;   // skip IsGameActive = true
+        }
+
+// Attack activity
+
+        Console.WriteLine("Player is attacking");
+
         IsGameActive = true;
     }
+
+
 
     public void EndGame()
     {
