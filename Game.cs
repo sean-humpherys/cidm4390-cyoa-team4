@@ -209,26 +209,7 @@ public class Game
         Console.WriteLine($"Name: {Dragon.Name}");
         Console.WriteLine($"Health: {Dragon.Health}");
         Console.WriteLine($"Strength: {Dragon.Strength}");
-        Console.WriteLine($"Strength: {Dragon.Agility}");
-
-        // Retreat or attack
-        Console.WriteLine(Messages.GetMessage(9));
-        string fightChoice = (Console.ReadLine() ?? "").Trim().ToLower();
-
-        while (fightChoice != "r" && fightChoice != "a")
-        {
-            fightChoice = (Console.ReadLine() ?? "").Trim().ToLower();
-        }
-
-        if (fightChoice == "r")
-        {
-            EndGame();
-            return;   // skip IsGameActive = true
-        }
-
-// Attack activity
-
-        Console.WriteLine("Player is attacking");
+        Console.WriteLine($"Agility: {Dragon.Agility}");
 
         IsGameActive = true;
     }
