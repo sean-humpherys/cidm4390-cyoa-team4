@@ -1,6 +1,4 @@
 
-
-
 public class Player
 {
     // Basic player information
@@ -16,6 +14,10 @@ public class Player
     // Player weapon
     public Weapon? Weapon { get; set; }
 
+    // Messages for the selected language
+    public Messages? LanguageMessages { get; set; }
+    private Messages? defaultMessages;
+
     // Default constructor
     public Player()
     {
@@ -29,16 +31,34 @@ public class Player
         Occupation = occupation;
     }
 
-    // Player taunt when an attack misses
+    // Return the translated message when the player defends
     public string MissedMeTaunt()
     {
-        return "You missed me!";
+        return GetLanguageMessages().GetMessage(48);
     }
 
-    // Player taunt when hit by an attack
+    // Randomly select a translated response when the player is hit
     public string WasHitTaunt()
     {
-        return "Ouch! That hurt!";
+        int messageNumber = Random.Shared.Next(52, 56);
+        return GetLanguageMessages().GetMessage(messageNumber);
+    }
+
+    // Use the game's selected language, or English by default
+    private Messages GetLanguageMessages()
+    {
+        if (LanguageMessages != null)
+        {
+            return LanguageMessages;
+        }
+
+        if (defaultMessages == null)
+        {
+            defaultMessages = new Messages();
+            defaultMessages.ReadDictionary(Languages.English);
+        }
+
+        return defaultMessages;
     }
 
     // Return the player's information and statistics

@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using cidm4390_cyoa_team4;
 
 [TestClass]
 public class PlayerUnitTests
@@ -8,10 +7,8 @@ public class PlayerUnitTests
     [TestMethod]
     public void DefaultConstructorInitializesPlayer()
     {
-        // Create a player without providing information
         Player player = new Player();
 
-        // Verify the initial values
         Assert.AreEqual("", player.Name);
         Assert.AreEqual("", player.Race);
         Assert.AreEqual("", player.Occupation);
@@ -25,10 +22,8 @@ public class PlayerUnitTests
     [TestMethod]
     public void ParameterizedConstructorStoresPlayerInformation()
     {
-        // Create a player with chosen information
         Player player = new Player("Arthur", "Human", "Fighter");
 
-        // Verify the information was stored correctly
         Assert.AreEqual("Arthur", player.Name);
         Assert.AreEqual("Human", player.Race);
         Assert.AreEqual("Fighter", player.Occupation);
@@ -37,17 +32,14 @@ public class PlayerUnitTests
     [TestMethod]
     public void DisplayStatsReturnsPlayerInformation()
     {
-        // Create a player and assign statistics
         Player player = new Player("Arthur", "Human", "Fighter");
 
         player.Strength = 10;
         player.Agility = 8;
         player.Health = 20;
 
-        // Get the player's statistics
         string stats = player.DisplayStats();
 
-        // Verify all information is included
         Assert.Contains("Name: Arthur", stats);
         Assert.Contains("Race: Human", stats);
         Assert.Contains("Occupation: Fighter", stats);
@@ -60,49 +52,82 @@ public class PlayerUnitTests
     [TestMethod]
     public void WeaponPropertyStoresAssignedWeapon()
     {
-        // Create a player and a weapon
         Player player = new Player();
         Weapon weapon = new Weapon("Long sword", 12, "-)=====>");
 
-        // Give the player the weapon
         player.Weapon = weapon;
 
-        // Verify the weapon was assigned correctly
         Assert.AreSame(weapon, player.Weapon);
     }
 
     [TestMethod]
     public void DisplayStatsIncludesWeaponInformation()
     {
-        // Create a player with a weapon
         Player player = new Player("Arthur", "Human", "Fighter");
         player.Weapon = new Weapon("Long sword", 12, "-)=====>");
 
-        // Get the player's statistics
         string stats = player.DisplayStats();
 
-        // Verify the weapon information is displayed
         Assert.Contains("Weapon: Long sword", stats);
         Assert.Contains("Weapon Max Damage: 12", stats);
     }
 
     [TestMethod]
-    public void MissedMeTauntReturnsMessage()
+    [DataRow(Languages.English)]
+    [DataRow(Languages.Spanish)]
+    [DataRow(Languages.French)]
+    public void MissedMeTauntUsesSelectedLanguage(Languages language)
     {
-        // Create a player
-        Player player = new Player();
+        Messages messages = new Messages();
+        messages.ReadDictionary(language);
 
-        // Verify the taunt
-        Assert.AreEqual("You missed me!", player.MissedMeTaunt());
+        Player player = new Player();
+        player.LanguageMessages = messages;
+
+        string result = player.MissedMeTaunt();
+
+        Assert.AreEqual(messages.GetMessage(48), result);
     }
 
     [TestMethod]
-    public void WasHitTauntReturnsMessage()
+    [DataRow(Languages.English)]
+    [DataRow(Languages.Spanish)]
+    [DataRow(Languages.French)]
+    public void WasHitTauntReturnsTranslatedResponse(Languages language)
     {
-        // Create a player
+        Messages messages = new Messages();
+        messages.ReadDictionary(language);
+
+        Player player = new Player();
+        player.LanguageMessages = messages;
+
+        string[] validResponses =
+        {
+            messages.GetMessage(52),
+            messages.GetMessage(53),
+            messages.GetMessage(54),
+            messages.GetMessage(55)
+        };
+
+        // Check multiple randomly selected responses
+        for (int i = 0; i < 20; i++)
+        {
+            string result = player.WasHitTaunt();
+            CollectionAssert.Contains(validResponses, result);
+        }
+    }
+
+    [TestMethod]
+    public void PlayerDefaultsToEnglishMessages()
+    {
         Player player = new Player();
 
-        // Verify the taunt
-        Assert.AreEqual("Ouch! That hurt!", player.WasHitTaunt());
+        Messages englishMessages = new Messages();
+        englishMessages.ReadDictionary(Languages.English);
+
+        Assert.AreEqual(
+            englishMessages.GetMessage(48),
+            player.MissedMeTaunt()
+        );
     }
 }
