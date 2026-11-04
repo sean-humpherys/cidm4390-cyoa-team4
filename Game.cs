@@ -40,21 +40,6 @@ public class Game
         // getMessage(2) menu message: 1 = start a new game, 2 = end the game
         Console.WriteLine(Messages.GetMessage(2));
 
-        Console.WriteLine("Please enter '1' to continue or '2' to exit the game");
-        string menuChoice = (Console.ReadLine() ?? "").Trim();
-
-        while (menuChoice != "1" && menuChoice != "2")
-        {
-            menuChoice = (Console.ReadLine() ?? "").Trim();
-        }
-
-        if (menuChoice == "2")
-        {
-            IsRunning = false;
-            EndGame();
-            return;
-        }
-
         // new Dragon(name)
         Dragon = new Dragon(DragonName);
         //Dragon.Health = 100;
@@ -64,14 +49,7 @@ public class Game
         Console.WriteLine(Messages.GetMessage(12));
         string name = Console.ReadLine() ?? "";
 
-        // getMessage(4) ask race
-        Race race;
-        Console.WriteLine(Messages.GetMessage(11));
-        Console.WriteLine(string.Join(", ", Enum.GetNames(typeof(Race))));
-        while (!Enum.TryParse(Console.ReadLine()?.Trim(), true, out race) || !Enum.IsDefined(race))
-        {
-            Console.WriteLine($"Please choose one of: {string.Join(", ", Enum.GetNames(typeof(Race)))}");
-        }
+
 
         // getMessage(5) ask occupation
         Occupation occupation;
@@ -82,62 +60,128 @@ public class Game
             Console.WriteLine($"Please choose one of: {string.Join(", ", Enum.GetNames(typeof(Occupation)))}");
         }
 
-        // new Player(name, race, occupation)
-        const int StatPoints = 30;
-        int strength, agility;
+            // Weapon is determined by the chosen occupation
+            Weapon weapon = occupation switch
+            {
+                Occupation.Fighter  => new Weapon("Long Sword", 12, ""),
+                Occupation.Magician => new Weapon("Lightning Bolt Spell", 12, ""),
+                Occupation.Thief    => new Weapon("Dagger", 6, ""),
+                Occupation.Archer   => new Weapon("Long Bow", 8, ""),
+                _                   => new Weapon("Sword", 10, "")   // fallback, shouldn't happen
+            };
 
-        while (true)
+        // Race
+        Race race;
+        Console.WriteLine(Messages.GetMessage(11));
+        while (!Enum.TryParse(Console.ReadLine()?.Trim(), true, out race) || !Enum.IsDefined(race))
         {
-            Console.WriteLine($"You have {StatPoints} points to split between Strength and Agility.");
-
-            Console.WriteLine("Enter Strength (1-20):");
-            while (!int.TryParse(Console.ReadLine()?.Trim(), out strength) || strength < 1 || strength > 20)
-            {
-                Console.WriteLine("Please enter a whole number from 1 to 20.");
-            }
-
-            Console.WriteLine("Enter Agility (1-20):");
-            while (!int.TryParse(Console.ReadLine()?.Trim(), out agility) || agility < 1 || agility > 20)
-            {
-                Console.WriteLine("Please enter a whole number from 1 to 20.");
-            }
-
-            if (strength + agility <= StatPoints) break;
-
-            Console.WriteLine($"That totals {strength + agility}. It must be {StatPoints} or less. Try again.");
+            Console.WriteLine($"Please choose one of: {string.Join(", ", Enum.GetNames(typeof(Race)))}");
         }
+
+        // ---- Strength ----
+        Console.WriteLine(Messages.GetMessage(14));   // Next, we are going to roll for strength. Type 'roll'
+        while (!(Console.ReadLine() ?? "").Trim().Equals("roll", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine("Please type 'roll'.");
+        }
+        int strength = Die.Roll(20);
+        //Console.WriteLine($"Current strength: {strength}");
+
+        // d4 strength modifier: subtracted for Halfling, added for everyone else
+        int strengthModifier = Die.Roll(4);
+        //Console.WriteLine($"Current strengthMod: {strengthModifier}");
+
+        if (race == Race.Halfling)
+        {
+            strength -= strengthModifier;
+        }
+        else
+        {
+            strength += strengthModifier;
+        }
+        strength = Math.Max(1, strength);   // keep strength from dropping to 0 or below
+        //Console.WriteLine($"{Messages.GetMessage(22)} {strength}");
+
+        // ---- Agility ----
+        Console.WriteLine(Messages.GetMessage(15));   // Next, we will roll for agility. Type 'roll'
+        while (!(Console.ReadLine() ?? "").Trim().Equals("roll", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine("Please type 'roll'.");
+        }
+        int agility = Die.Roll(20);
+        //Console.WriteLine($"Current agility: {agility}");
+
+        int agilityModifier = Die.Roll(4);
+        //Console.WriteLine($"Current agilityMod: {agilityModifier}");
+
+        if (race == Race.Halfling || race == Race.Elf)
+        {
+            agility += agilityModifier;
+        }
+        //Console.WriteLine($"{Messages.GetMessage(23)} {agility}");
+
+        // ---- Health ----
+        Console.WriteLine(Messages.GetMessage(16));   // Next, we will roll for health points. Type 'roll'
+        while (!(Console.ReadLine() ?? "").Trim().Equals("roll", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine("Please type 'roll'.");
+        }
+        int health = Die.Roll(20);
+        //Console.WriteLine($"Current health: {health}");
+
+        if (race != Race.Halfling)
+        {
+            health += strengthModifier;   // the d4 rolled for strength earlier
+        }
+        //Console.WriteLine($"{Messages.GetMessage(24)} {health}");
 
         Player = new Player(name, race.ToString(), occupation.ToString())
         {
             Strength = strength,
             Agility = agility,
-            Health = 50,
-            Weapon = new Weapon("Sword", 10, "")
+            Health = health,
+            Weapon = weapon
         };
 
         // new Dragon(name)
         Dragon = new Dragon(DragonName)
         {
-            Health = 100,
-            Strength = 10,
+            Health = Die.Roll(20),
+            Strength = Die.Roll(20),
+            Agility = Die.Roll(20),
             Weapon = new Weapon("Fire Breath", 12, "")
         };
 
         // new Combat(player, dragon)
         Combat = new Combat(Player, Dragon);
 
-        // Display the character summary
-        Console.WriteLine();
-        Console.WriteLine(Messages.GetMessage(18));
-        Console.WriteLine($"{Messages.GetMessage(19)} {Player.Name}");
-        Console.WriteLine($"{Messages.GetMessage(20)} {Player.Race}");
-        Console.WriteLine($"{Messages.GetMessage(21)} {Player.Occupation}");
-        Console.WriteLine($"{Messages.GetMessage(22)} {Player.Strength}");
-        Console.WriteLine($"{Messages.GetMessage(23)} {Player.Agility}");
-        Console.WriteLine($"{Messages.GetMessage(24)} {Player.Health}");
-        Console.WriteLine($"{Messages.GetMessage(25)} {Player.Weapon.Type}");
-        Console.WriteLine($"{Messages.GetMessage(26)} {Player.Weapon.MaxDamage}");
-        Console.WriteLine();
+         // ---- What next? (message 17) ----
+        Console.WriteLine(Messages.GetMessage(17));
+        string nextChoice = (Console.ReadLine() ?? "").Trim();
+
+        while (nextChoice != "1" && nextChoice != "2")
+        {
+            nextChoice = (Console.ReadLine() ?? "").Trim();
+        }
+
+        if (nextChoice == "1")
+        {
+            Console.WriteLine();
+            Console.WriteLine(Messages.GetMessage(18));
+            Console.WriteLine($"{Messages.GetMessage(19)} {Player.Name}");
+            Console.WriteLine($"{Messages.GetMessage(20)} {Player.Race}");
+            Console.WriteLine($"{Messages.GetMessage(21)} {Player.Occupation}");
+            Console.WriteLine($"{Messages.GetMessage(22)} {Player.Strength}");
+            Console.WriteLine($"{Messages.GetMessage(23)} {Player.Agility}");
+            Console.WriteLine($"{Messages.GetMessage(24)} {Player.Health}");
+            Console.WriteLine($"{Messages.GetMessage(25)} {Player.Weapon.Type}");
+            Console.WriteLine($"{Messages.GetMessage(26)} {Player.Weapon.MaxDamage}");
+            Console.WriteLine();
+        }
+
+        // '2' falls through with no stats shown
+
+        // ...then the path choice (message 3), dragon stats, retreat/attack, and IsGameActive = true as before
 
         // Path choice: message 3 prompts, 'n' = message 4, 's' = message 5, 'e' = exit
         Console.WriteLine(Messages.GetMessage(3));
@@ -165,6 +209,8 @@ public class Game
         Console.WriteLine(Messages.GetMessage(8));
         Console.WriteLine($"Name: {Dragon.Name}");
         Console.WriteLine($"Health: {Dragon.Health}");
+        Console.WriteLine($"Strength: {Dragon.Strength}");
+        Console.WriteLine($"Strength: {Dragon.Agility}");
 
         // Retreat or attack
         Console.WriteLine(Messages.GetMessage(9));
@@ -193,6 +239,7 @@ public class Game
     public void EndGame()
     {
         IsGameActive = false;
+        IsRunning = false;
         Player = null;
         Dragon = null;
         Combat = null;
