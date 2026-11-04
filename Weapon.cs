@@ -6,14 +6,13 @@ public class Weapon
     public int MaxDamage {get; set;}
     public string AsciiArt {get; set;}
 
-    //Weapons
+    //Weapon
     public Weapon (string type, int maxDamage, string asciiArt){
 
         Type = type;
         MaxDamage = maxDamage;
         AsciiArt = asciiArt;
-        //Hello
-        //Added to update the Weapon.cs in PascalCase
+        
     }
 
 }

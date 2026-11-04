@@ -17,6 +17,8 @@ public class Combat
 
         int playerAttackRoll = die.Roll(20);
 
+        Console.WriteLine($"You prepare to attack the dragon with your weapon. As a {Player.Occupation} you withdraw your weapon {Player.Weapon!.AsciiArt}. You attack!");
+
         if (playerAttackRoll <= Player.Strength)
         {
             Console.WriteLine($"You hit {Dragon.Name}");
