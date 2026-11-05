@@ -11,22 +11,31 @@ public class Combat
         Dragon = dragon;
     }
 
+        // Language file, set on the player by Game
+    private Messages M => Player.LanguageMessages!;
+
+    public string RetreatOrAttackPrompt() => M.GetMessage(9);
+
+    // Messages 28 + 29 + 30 on one line, then the weapon art
+    public string AttackIntro() =>
+        $"{M.GetMessage(28)}{Player.Occupation}, {M.GetMessage(29)}{Player.Weapon!.Type}. {M.GetMessage(30)}" +
+        $"{Environment.NewLine}{Player.Weapon.AsciiArt}";
+
     public void PlayAttacksDragonSequence()
     {
         Die die = new Die();
 
         int playerAttackRoll = die.Roll(20);
 
-        Console.WriteLine($"You prepare to attack the dragon with your weapon. As a {Player.Occupation} you withdraw your weapon {Player.Weapon!.AsciiArt}. You attack!");
 
         if (playerAttackRoll <= Player.Strength)
         {
-            Console.WriteLine($"You hit {Dragon.Name}");
+             Console.WriteLine($"{M.GetMessage(32)}{Dragon.Name}");
             int dragonDefendRoll = die.Roll(20);
 
             if (dragonDefendRoll <= Dragon.Agility)
             {
-                Console.WriteLine($"{Dragon.Name} successfully defends your attack");
+                Console.WriteLine($"{Dragon.Name}{M.GetMessage(33)}");
                 Console.WriteLine(Dragon.MissedMeTaunt());
             }
             else
@@ -34,13 +43,12 @@ public class Combat
                 int dragonDamage = die.Roll(Player.Weapon!.MaxDamage);
                 Dragon.Health -= dragonDamage;
                 
-                Console.WriteLine($"The dragon failed to defend your attack. Your weapon delivers {dragonDamage} damage points. The Dragons health point is now {Dragon.Health}");
+                Console.WriteLine($"{M.GetMessage(39)}{dragonDamage}{M.GetMessage(40)} {Dragon.Health}");
 
                 if (Dragon.Health <= 0)
                 {
-                    Console.WriteLine($"With the last words of 'Arggg!', you have defeated the dragon.");
-                    //Uncomment when Game.cs is added
-                    //Game.EndGame();
+                    Console.WriteLine(M.GetMessage(41));
+                    
                 }
                 else
                 {
@@ -50,7 +58,7 @@ public class Combat
         }
         else
         {
-            Console.WriteLine($"You missed {Dragon.Name}");
+            Console.WriteLine($"{M.GetMessage(31)} {Dragon.Name}");
         }
     }
     public void DragonAttacksPlayerSequence()
@@ -61,12 +69,11 @@ public class Combat
 
         if (dragonAttackRoll <= Dragon.Strength)
         {
-            Console.WriteLine($"{Dragon.Name} hits you");
+            Console.WriteLine($"{Dragon.Name}{M.GetMessage(47)}");
             int playerDefendRoll = die.Roll(20);
 
             if (playerDefendRoll <= Player.Agility)
             {
-                Console.WriteLine("You successfully defend the attack");
                 Console.WriteLine(Player.MissedMeTaunt());
             }
             else
@@ -74,13 +81,12 @@ public class Combat
                 int playerDamage = die.Roll(Dragon.Weapon!.MaxDamage);
                 Player.Health -= playerDamage;
                 
-                Console.WriteLine($"The dragon attack delivers {playerDamage} damage points. Your health point is now {Player.Health}");
+                Console.WriteLine($"{M.GetMessage(49)}{playerDamage}{M.GetMessage(50)}{Player.Health}");
 
                 if (Player.Health <= 0)
                 {
-                    Console.WriteLine($"With the last words of 'Oh No!', you have been defeated.");
-                    //Uncomment when Game.cs is added
-                    //Game.EndGame();
+                    Console.WriteLine(M.GetMessage(51));
+                   
                 }
                 else
                 {
@@ -91,7 +97,7 @@ public class Combat
         }
         else
         {
-            Console.WriteLine($"The dragon missed you.");
+            Console.WriteLine(M.GetMessage(46));
         }
     }
 }
